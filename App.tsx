@@ -52,14 +52,19 @@ function App() {
     setErrorMsg(null);
   };
 
-  // Helper function to call webook
-  const callWebhook = async (url: string, payload: any) => {
+  // Helper function to call webhook with FormData
+  const callWebhook = async (url: string, file: File, prompt: string, mode: string) => {
+    // Create FormData as required by n8n webhook
+    const formData = new FormData();
+    formData.append('data', file);  // CRITICAL: Must be 'data' for n8n webhook
+    formData.append('fileName', file.name);
+    formData.append('prompt', prompt);
+    formData.append('mode', mode);
+
     const response = await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
+      body: formData,  // Send as FormData, not JSON
+      // DO NOT set Content-Type header - browser will set it automatically with boundary
     });
 
     if (!response.ok) {
@@ -67,8 +72,6 @@ function App() {
     }
 
     // Assume the webhook returns the image/video URL directly or in a JSON field
-    // Adjust this based on actual n8n response structure. 
-    // For now, assuming it returns a JSON object with an 'output' or 'url' field, or just the text url.
     const contentType = response.headers.get("content-type");
     if (contentType && contentType.indexOf("application/json") !== -1) {
       const data = await response.json();
@@ -81,7 +84,7 @@ function App() {
 
 
   const handleGenerate = async () => {
-    if (!fileState.base64 || !fileState.mimeType) {
+    if (!fileState.file) {
       setErrorMsg("请先上传照片 (Please upload a photo first)");
       return;
     }
@@ -94,18 +97,8 @@ function App() {
       const promptToUse = mode === 'image' ? IMAGE_PROMPT : VIDEO_PROMPT;
       const webhookUrl = mode === 'image' ? IMAGE_WEBHOOK_URL : VIDEO_WEBHOOK_URL;
 
-      // Construct payload
-      // Sending base64 without prefix as requested by typical AI APIs, 
-      // but n8n might expect full data URI or just the base64 string.
-      // Using the one extracted earlier: fileState.base64
-      const payload = {
-        image: fileState.base64,
-        mimeType: fileState.mimeType,
-        prompt: promptToUse,
-        mode: mode
-      };
-
-      url = await callWebhook(webhookUrl, payload);
+      // Send the actual file object, not base64
+      url = await callWebhook(webhookUrl, fileState.file, promptToUse, mode);
 
       if (!url) {
         throw new Error("Received empty response from generation service.");
@@ -228,10 +221,10 @@ function App() {
             {/* Generate Button */}
             <button
               onClick={handleGenerate}
-              disabled={status === GenerationStatus.LOADING || !fileState.base64}
+              disabled={status === GenerationStatus.LOADING || !fileState.file}
               className={`
                 w-full py-4 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] active:scale-[0.98]
-                ${status === GenerationStatus.LOADING || !fileState.base64
+                ${status === GenerationStatus.LOADING || !fileState.file
                   ? 'bg-gray-700/50 text-gray-400 cursor-not-allowed border border-gray-600'
                   : 'bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 text-red-950 hover:from-yellow-400 hover:to-yellow-300 border border-yellow-300/50 shadow-yellow-500/20'
                 }
