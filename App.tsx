@@ -134,7 +134,7 @@ function App() {
         <div className="w-16 h-16 bg-red-600 border-2 border-yellow-400 rotate-45 flex items-center justify-center shadow-[0_0_15px_rgba(234,179,8,0.5)]">
           <span className="text-yellow-300 font-serif text-3xl -rotate-45 font-bold select-none drop-shadow-md">福</span>
         </div>
-        <div className="mt-6 bg-gradient-to-b from-red-700 to-red-800 border-2 border-yellow-600/50 py-4 px-3 rounded-b-lg shadow-xl">
+        <div className="mt-6 bg-gradient-to-b from-red-700 to-red-800 border-2 border-yellow-600/50 py-6 px-4 rounded-b-lg shadow-xl flex items-center justify-center">
           <div className="writing-vertical text-yellow-400 font-serif text-xl font-bold tracking-[0.5em] select-none">
             吉星高照
           </div>
@@ -147,7 +147,7 @@ function App() {
         <div className="w-16 h-16 bg-red-600 border-2 border-yellow-400 rotate-45 flex items-center justify-center shadow-[0_0_15px_rgba(234,179,8,0.5)]">
           <span className="text-yellow-300 font-serif text-3xl -rotate-45 font-bold select-none drop-shadow-md">春</span>
         </div>
-        <div className="mt-6 bg-gradient-to-b from-red-700 to-red-800 border-2 border-yellow-600/50 py-4 px-3 rounded-b-lg shadow-xl">
+        <div className="mt-6 bg-gradient-to-b from-red-700 to-red-800 border-2 border-yellow-600/50 py-6 px-4 rounded-b-lg shadow-xl flex items-center justify-center">
           <div className="writing-vertical text-yellow-400 font-serif text-xl font-bold tracking-[0.5em] select-none">
             马到成功
           </div>
