@@ -8,7 +8,7 @@ import { Wand2, Video, Image as ImageIcon, Sparkles, Clock } from 'lucide-react'
 const IMAGE_PROMPT = "把这张图片变成2026马年新春风格。保留人物主要特征，但让背景和服饰充满节日氛围。添加大红灯笼、金色骏马装饰元素、绚丽的烟花背景、红色剪纸。整体画面喜庆洋洋，色彩鲜艳（红色和金色为主），高质量，高细节，电影感光效，3D皮克斯风格或高保真摄影风格。";
 const VIDEO_PROMPT = "2026马年新春贺岁视频。画面中有骏马奔腾的意象（光影或剪纸形式），灯笼在微风中轻轻摇曳，背景有绚丽的烟花不断绽放，金色粒子飘落，喜庆热闹的氛围，cinematic lighting, 4k, slow motion, festive fantasy.";
 
-const IMAGE_WEBHOOK_URL = "https://jooymedia.zeabur.app/webhook/cde2f263-1383-48dd-8fe8-42d324bc9016";
+const IMAGE_WEBHOOK_URL = "https://jooymedia.zeabur.app/webhook/6232c3df-3133-492a-95dc-88445fb6071b";
 const VIDEO_WEBHOOK_URL = "https://jooymedia.zeabur.app/webhook/e1bff016-6a16-40e3-828d-de99b9c42013";
 
 function App() {
