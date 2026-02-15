@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 福气马上来</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Noto Serif SC', serif;
+        background-color: #7f1d1d; /* Brighter base: red-900 */
+      }
+      .cny-gradient {
+        /* Much brighter gradient: Red-600 center to Red-900 edges */
+        background: radial-gradient(circle at center, #dc2626 0%, #7f1d1d 100%);
+      }
+      .gold-text {
+        color: #fcd34d;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+      .gold-border {
+        border-color: #f59e0b;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #450a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #b91c1c; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #dc2626; 
+      }
+
+      /* Custom Animation for Lanterns/Decorations */
+      @keyframes swing {
+        0% { transform: rotate(-3deg); }
+        50% { transform: rotate(3deg); }
+        100% { transform: rotate(-3deg); }
+      }
+      .animate-swing {
+        animation: swing 6s ease-in-out infinite;
+        transform-origin: top center;
+      }
+
+      /* Vertical text utility */
+      .writing-vertical {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="cny-gradient min-h-screen text-white">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
