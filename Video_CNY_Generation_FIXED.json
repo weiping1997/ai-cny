@@ -1,0 +1,556 @@
+{
+  "name": "Video CNY Generation - Latest",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1oVJK5qt2uBH6FIKcISkJWmYZV8zAPW7YKqPL9AiRGiU",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        4500,
+        900
+      ],
+      "id": "google-sheets-logging",
+      "name": "Save User Data to Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cny-generation",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        4128,
+        1072
+      ],
+      "id": "646377b7-958b-4da7-b604-1d79e917f043",
+      "name": "Webhook - Receive Image",
+      "webhookId": "cny-generation-webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "user-id",
+              "name": "userId",
+              "value": "={{ $json.body.userId || 'anonymous' }}",
+              "type": "string"
+            },
+            {
+              "id": "session-id",
+              "name": "sessionId",
+              "value": "={{ $json.body.sessionId || $now.toString() }}",
+              "type": "string"
+            },
+            {
+              "id": "file-name",
+              "name": "fileName",
+              "value": "={{ $json.body.fileName || 'photo.jpg' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4352,
+        1072
+      ],
+      "id": "b5fe4508-0b89-432e-9682-e76f5839f155",
+      "name": "Save Request Info"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kieai.redpandaai.co/api/file-stream-upload",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 51d575a122370795acb51695d7d9c672"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "uploadPath",
+              "value": "images/user-uploads"
+            },
+            {
+              "name": "fileName",
+              "value": "={{ Date.now() + '_' + $('Save Request Info').item.json.fileName }}"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4576,
+        1168
+      ],
+      "id": "3c4ab32c-5122-4c96-9af9-354acaf86487",
+      "name": "Upload Image to Server"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/playground/createTask",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 51d575a122370795acb51695d7d9c672"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"google/nano-banana-edit\",\n  \"callBackUrl\": \"\",\n  \"input\": {\n    \"prompt\": \"A realistic image of a person in elegant, simple Chinese new year style attire — captured from either a half-body, or full-body view. The person looks naturally at the camera with a friendly, confident smile. The softly glowing background features subtle traditional Chinese landscape elements like bamboo, cherry blossoms, or misty mountains, giving a serene and elegant Chinese mood. Warm cinematic lighting enhances the face and costume details without distortion. Softly blurred background.\",\n    \"image_urls\": [\n      \"{{ $json.data.downloadUrl }}\"\n    ]\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4800,
+        1168
+      ],
+      "id": "ad003edf-2069-42d1-b310-ed077ca60719",
+      "name": "Edit Image - CNY Style"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5024,
+        1168
+      ],
+      "id": "35c1941d-dbf8-4800-95d2-6209263137b1",
+      "name": "Wait 10s",
+      "webhookId": "wait-image-webhook"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/jobs/recordInfo?taskId={{ $json.data.taskId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 51d575a122370795acb51695d7d9c672"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5248,
+        1104
+      ],
+      "id": "7b9409df-fd8f-4300-9983-56366f77b1a9",
+      "name": "Check Image Status"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "image-ready",
+              "leftValue": "={{ $json.data.state }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        5472,
+        1168
+      ],
+      "id": "6c16605c-3740-4072-b52d-c4fd77adb891",
+      "name": "If Image Ready"
+    },
+    {
+      "parameters": {
+        "url": "={{ JSON.parse($json.data.resultJson)[\"resultUrls\"][0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5696,
+        1168
+      ],
+      "id": "10aa7f18-fc2d-4b80-88d7-320a263c12b6",
+      "name": "Retrieve Edited Image"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/veo/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 51d575a122370795acb51695d7d9c672"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": \"both hands clasped together in front of his chest, moving the clasped hands gently forward and back once or twice, in a respectful and celebratory rhythm. He smiles warmly and confidently, maintaining eye contact with the camera and say: '新年快乐, 万事如意, 祝你马年, 一马当先'\",\n  \"imageUrls\": [\n    \"{{ JSON.parse($json.data.resultJson)[\"resultUrls\"][0] }}\"\n  ],\n  \"model\": \"veo3_fast\",\n  \"callBackUrl\": \"\",\n  \"aspect_ratio\": \"9:16\",\n  \"seeds\": 12345,\n  \"enableFallback\": false,\n  \"enableTranslation\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        5920,
+        1168
+      ],
+      "id": "9af9ed54-574a-451b-8932-6b27b1075d16",
+      "name": "Generate CNY Video"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        6144,
+        1168
+      ],
+      "id": "28811ec8-74d1-4d99-b01d-438ac88467c8",
+      "name": "Wait 30s",
+      "webhookId": "wait-video-webhook"
+    },
+    {
+      "parameters": {
+        "url": "https://api.kie.ai/api/v1/veo/record-info",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "taskId",
+              "value": "={{ $json.data.taskId }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 51d575a122370795acb51695d7d9c672"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6368,
+        1104
+      ],
+      "id": "fc0a1118-de52-402b-98be-1e9611fc2506",
+      "name": "Check Video Status"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "video-ready",
+              "leftValue": "={{ $json.data.successFlag }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        6592,
+        1168
+      ],
+      "id": "7056f07d-ff86-44b6-803e-ebc40287eb8e",
+      "name": "If Video Ready"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data.response.resultUrls[0] }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6816,
+        1168
+      ],
+      "id": "caf7eed7-f8a2-4f9e-a698-80a0eb547c06",
+      "name": "Retrieve Video File"
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "responseBinaryPropertyName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        7024,
+        1168
+      ],
+      "id": "611c3ed3-861f-441c-891a-afecaaeea337",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Save User Data to Sheets": {
+      "main": [
+        [
+          {
+            "node": "Upload Image to Server",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Receive Image": {
+      "main": [
+        [
+          {
+            "node": "Save Request Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Request Info": {
+      "main": [
+        [
+          {
+            "node": "Save User Data to Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Image to Server": {
+      "main": [
+        [
+          {
+            "node": "Edit Image - CNY Style",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image - CNY Style": {
+      "main": [
+        [
+          {
+            "node": "Wait 10s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 10s": {
+      "main": [
+        [
+          {
+            "node": "Check Image Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Image Status": {
+      "main": [
+        [
+          {
+            "node": "If Image Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Image Ready": {
+      "main": [
+        [
+          {
+            "node": "Retrieve Edited Image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 10s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Edited Image": {
+      "main": [
+        [
+          {
+            "node": "Generate CNY Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate CNY Video": {
+      "main": [
+        [
+          {
+            "node": "Wait 30s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 30s": {
+      "main": [
+        [
+          {
+            "node": "Check Video Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Video Status": {
+      "main": [
+        [
+          {
+            "node": "If Video Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Video Ready": {
+      "main": [
+        [
+          {
+            "node": "Retrieve Video File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 30s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Video File": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "e83c9193-e8d7-4843-91e6-226cf01e7dbd",
+  "meta": {
+    "instanceId": "2c2c76732d13189f40d1a1bf957be69de4bd23805bdb4503c2c280af27c1de6c"
+  },
+  "id": "go1mGFMEEkOgyWrSdLuQK",
+  "tags": []
+}

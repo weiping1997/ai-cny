@@ -1,0 +1,407 @@
+{
+  "name": "CNY image gen",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1oVJK5qt2uBH6FIKcISkJWmYZV8zAPW7YKqPL9AiRGiU",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        240,
+        100
+      ],
+      "id": "google-sheets-logging",
+      "name": "Save User Data to Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cde2f263-1383-48dd-8fe8-42d324bc9016",
+        "responseMode": "responseNode",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS, GET"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -208,
+        176
+      ],
+      "id": "af1df795-d97b-4f4a-84f1-a1d577f8c06f",
+      "name": "Webhook",
+      "webhookId": "cde2f263-1383-48dd-8fe8-42d324bc9016"
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "responseBinaryPropertyName": "data",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1568,
+        256
+      ],
+      "id": "6c5ea315-72b4-4523-80ae-032639ed775a",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "user-id",
+              "name": "userId",
+              "value": "={{ $json.body.userId || 'anonymous' }}",
+              "type": "string"
+            },
+            {
+              "id": "session-id",
+              "name": "sessionId",
+              "value": "={{ $json.body.sessionId || $now.toString() }}",
+              "type": "string"
+            },
+            {
+              "id": "file-name",
+              "name": "fileName",
+              "value": "={{ $json.body.fileName || 'photo.jpg' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        176
+      ],
+      "id": "c1c0e2dc-f884-4f33-b9ad-7733f7640bc7",
+      "name": "Save Request Info"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kieai.redpandaai.co/api/file-stream-upload",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 51d575a122370795acb51695d7d9c672"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "uploadPath",
+              "value": "images/user-uploads"
+            },
+            {
+              "name": "fileName",
+              "value": "={{ Date.now() + '_' + $('Save Request Info').item.json.fileName }}"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        272
+      ],
+      "id": "a634b08e-af75-4a44-9469-778f30c057e1",
+      "name": "Upload Image to Server"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/playground/createTask",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 51d575a122370795acb51695d7d9c672"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"google/nano-banana-edit\",\n  \"callBackUrl\": \"\",\n  \"input\": {\n    \"prompt\": \"A realistic image of a person in elegant, simple Chinese new year style attire – captured from either a half-body, or full-body view. The person looks naturally at the camera with a friendly, confident smile. The softly glowing background features subtle traditional Chinese landscape elements like bamboo, cherry blossoms, or misty mountains, giving a serene and elegant Chinese mood. Warm cinematic lighting enhances the face and costume details without distortion. Softly blurred background.\",\n    \"image_urls\": [\n      \"{{ $json.data.downloadUrl }}\"\n    ]\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        464,
+        272
+      ],
+      "id": "e714e58d-8243-4dd0-8553-20d41b3dbae1",
+      "name": "Edit Image - CNY Style"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        688,
+        272
+      ],
+      "id": "818f02e4-e1ce-42d5-a1a6-ca2cc50e74bf",
+      "name": "Wait 10s",
+      "webhookId": "wait-image-webhook"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/jobs/recordInfo?taskId={{ $json.data.taskId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 51d575a122370795acb51695d7d9c672"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        912,
+        208
+      ],
+      "id": "edb367bb-e215-4e63-aa12-d8c54bde3698",
+      "name": "Check Image Status"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "image-ready",
+              "leftValue": "={{ $json.data.state }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1136,
+        272
+      ],
+      "id": "bc00ad15-fff1-4b4c-a3d6-c97ec0346d68",
+      "name": "If Image Ready"
+    },
+    {
+      "parameters": {
+        "url": "={{ JSON.parse($json.data.resultJson)[\"resultUrls\"][0] }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1360,
+        272
+      ],
+      "id": "c5a5ec2c-5203-4ff3-b384-dde6c7e6c6e1",
+      "name": "Retrieve Edited Image"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Save User Data to Sheets": {
+      "main": [
+        [
+          {
+            "node": "Upload Image to Server",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Save Request Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Request Info": {
+      "main": [
+        [
+          {
+            "node": "Save User Data to Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Image to Server": {
+      "main": [
+        [
+          {
+            "node": "Edit Image - CNY Style",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image - CNY Style": {
+      "main": [
+        [
+          {
+            "node": "Wait 10s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 10s": {
+      "main": [
+        [
+          {
+            "node": "Check Image Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Image Status": {
+      "main": [
+        [
+          {
+            "node": "If Image Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Image Ready": {
+      "main": [
+        [
+          {
+            "node": "Retrieve Edited Image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 10s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Edited Image": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9380bbf4-50c0-4dff-820d-75ae3c7ae885",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2c2c76732d13189f40d1a1bf957be69de4bd23805bdb4503c2c280af27c1de6c"
+  },
+  "id": "lEaZHPXE4XajXRzr",
+  "tags": [
+    {
+      "updatedAt": "2025-09-23T08:53:23.098Z",
+      "createdAt": "2025-09-23T08:53:23.098Z",
+      "id": "t68uPONDF2vem0Z5",
+      "name": "level 2"
+    }
+  ]
+}
