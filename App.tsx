@@ -9,7 +9,7 @@ const IMAGE_PROMPT = "把这张图片变成2026马年新春风格。保留人物
 const VIDEO_PROMPT = "2026马年新春贺岁视频。画面中有骏马奔腾的意象（光影或剪纸形式），灯笼在微风中轻轻摇曳，背景有绚丽的烟花不断绽放，金色粒子飘落，喜庆热闹的氛围，cinematic lighting, 4k, slow motion, festive fantasy.";
 
 const IMAGE_WEBHOOK_URL = "https://jooymedia.zeabur.app/webhook/6232c3df-3133-492a-95dc-88445fb6071b";
-const VIDEO_WEBHOOK_URL = "https://jooymedia.zeabur.app/webhook/e1bff016-6a16-40e3-828d-de99b9c42013";
+const VIDEO_WEBHOOK_URL = "https://jooymedia.zeabur.app/webhook/cny-generation";
 
 function App() {
   const [fileState, setFileState] = useState<UploadedFileState>({
