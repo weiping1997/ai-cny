@@ -407,80 +407,54 @@ function App() {
 
           {/* Footer Note */}
           <div className="mt-8 pt-8 border-t border-red-500/20 text-center">
-            <h3 className="text-yellow-400 font-bold mb-6 flex items-center justify-center gap-2">
+            <h3 className="text-xl text-yellow-400 font-bold mb-8 flex items-center justify-center gap-2">
               <span className="w-8 h-px bg-yellow-500/30"></span>
               关注 AI
               <span className="w-8 h-px bg-yellow-500/30"></span>
             </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-              {/* LEAD Social Card */}
-              <div className="group relative bg-gradient-to-b from-red-950/40 to-black/60 p-8 rounded-[2rem] border border-red-500/10 backdrop-blur-md flex flex-col items-center justify-between hover:border-yellow-500/30 hover:shadow-[0_20px_50px_rgba(234,179,8,0.05)] transition-all duration-500 overflow-hidden">
-                {/* Background Decoration */}
-                <div className="absolute -top-10 -right-10 w-32 h-32 bg-yellow-500/5 rounded-full blur-3xl group-hover:bg-yellow-500/10 transition-all duration-500"></div>
-
-                <div className="w-full flex-grow flex flex-col items-center justify-center gap-6 relative z-10">
-                  <div className="relative">
-                    <div className="absolute -inset-4 bg-yellow-500/5 blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-full"></div>
-                    <img
-                      src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/6992a36b6bac2480b7b57be5.png"
-                      alt="LEAD Logo"
-                      className="h-12 w-auto object-contain relative transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-
-                  <div className="flex gap-4">
-                    <a href="https://www.facebook.com/thelead.io" target="_blank" rel="noopener noreferrer"
-                      className="w-11 h-11 rounded-2xl bg-red-950/50 border border-red-500/10 flex items-center justify-center text-red-200/40 hover:bg-yellow-500 hover:text-red-950 hover:border-yellow-500 hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] transition-all duration-300 hover:-translate-y-1"
-                      title="Facebook">
-                      <Facebook size={20} />
-                    </a>
-                    <a href="https://www.instagram.com/theleadio/" target="_blank" rel="noopener noreferrer"
-                      className="w-11 h-11 rounded-2xl bg-red-950/50 border border-red-500/10 flex items-center justify-center text-red-200/40 hover:bg-yellow-500 hover:text-red-950 hover:border-yellow-500 hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] transition-all duration-300 hover:-translate-y-1"
-                      title="Instagram">
-                      <Instagram size={20} />
-                    </a>
-                    <a href="https://www.linkedin.com/school/thelead" target="_blank" rel="noopener noreferrer"
-                      className="w-11 h-11 rounded-2xl bg-red-950/50 border border-red-500/10 flex items-center justify-center text-red-200/40 hover:bg-yellow-500 hover:text-red-950 hover:border-yellow-500 hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] transition-all duration-300 hover:-translate-y-1"
-                      title="LinkedIn">
-                      <Linkedin size={20} />
-                    </a>
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+              {/* LEAD Socials */}
+              <div className="space-y-3 bg-black/20 p-4 rounded-xl border border-red-500/10 flex flex-col items-center">
+                <div className="mb-2 border-b border-red-500/10 pb-2 w-full flex justify-center">
+                  <img
+                    src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/6992a36b6bac2480b7b57be5.png"
+                    alt="LEAD Logo"
+                    className="h-11 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
+                  />
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <a href="https://www.facebook.com/thelead.io" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Facebook size={14} /> Facebook
+                  </a>
+                  <a href="https://www.instagram.com/theleadio/" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Instagram size={14} /> Instagram
+                  </a>
+                  <a href="https://www.linkedin.com/school/thelead" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Linkedin size={14} /> Linkedin
+                  </a>
                 </div>
               </div>
 
-              {/* JooY Media Social Card */}
-              <div className="group relative bg-gradient-to-b from-red-950/40 to-black/60 p-8 rounded-[2rem] border border-red-500/10 backdrop-blur-md flex flex-col items-center justify-between hover:border-yellow-500/30 hover:shadow-[0_20px_50px_rgba(234,179,8,0.05)] transition-all duration-500 overflow-hidden">
-                {/* Background Decoration */}
-                <div className="absolute -top-10 -right-10 w-32 h-32 bg-yellow-500/5 rounded-full blur-3xl group-hover:bg-yellow-500/10 transition-all duration-500"></div>
-
-                <div className="w-full flex-grow flex flex-col items-center justify-center gap-6 relative z-10">
-                  <div className="relative">
-                    <div className="absolute -inset-4 bg-yellow-500/5 blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-full"></div>
-                    <img
-                      src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/69929e33a9efde5eb39163e7.png"
-                      alt="JooY Media Logo"
-                      className="h-12 w-auto object-contain relative transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-
-                  <div className="flex gap-4">
-                    <a href="https://www.facebook.com/jooymedia/" target="_blank" rel="noopener noreferrer"
-                      className="w-11 h-11 rounded-2xl bg-red-950/50 border border-red-500/10 flex items-center justify-center text-red-200/40 hover:bg-yellow-500 hover:text-red-950 hover:border-yellow-500 hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] transition-all duration-300 hover:-translate-y-1"
-                      title="Facebook">
-                      <Facebook size={20} />
-                    </a>
-                    <a href="https://www.instagram.com/jooy.media" target="_blank" rel="noopener noreferrer"
-                      className="w-11 h-11 rounded-2xl bg-red-950/50 border border-red-500/10 flex items-center justify-center text-red-200/40 hover:bg-yellow-500 hover:text-red-950 hover:border-yellow-500 hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] transition-all duration-300 hover:-translate-y-1"
-                      title="Instagram">
-                      <Instagram size={20} />
-                    </a>
-                    <a href="https://www.linkedin.com/company/jooymedia" target="_blank" rel="noopener noreferrer"
-                      className="w-11 h-11 rounded-2xl bg-red-950/50 border border-red-500/10 flex items-center justify-center text-red-200/40 hover:bg-yellow-500 hover:text-red-950 hover:border-yellow-500 hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] transition-all duration-300 hover:-translate-y-1"
-                      title="LinkedIn">
-                      <Linkedin size={20} />
-                    </a>
-                  </div>
+              {/* JooY Media Socials */}
+              <div className="space-y-3 bg-black/20 p-4 rounded-xl border border-red-500/10 flex flex-col items-center">
+                <div className="mb-2 border-b border-red-500/10 pb-2 w-full flex justify-center">
+                  <img
+                    src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/69929e33a9efde5eb39163e7.png"
+                    alt="JooY Media Logo"
+                    className="h-11 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
+                  />
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <a href="https://www.facebook.com/jooymedia/" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Facebook size={14} /> Facebook
+                  </a>
+                  <a href="https://www.instagram.com/jooy.media" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Instagram size={14} /> Instagram
+                  </a>
+                  <a href="https://www.linkedin.com/company/jooymedia" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Linkedin size={14} /> Linkedin
+                  </a>
                 </div>
               </div>
             </div>
