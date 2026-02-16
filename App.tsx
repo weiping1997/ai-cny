@@ -420,7 +420,7 @@ function App() {
                   <img
                     src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/6992a36b6bac2480b7b57be5.png"
                     alt="LEAD Logo"
-                    className="h-8 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
+                    className="h-11 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
                   />
                 </div>
                 <div className="flex flex-col items-center gap-2">
@@ -442,7 +442,7 @@ function App() {
                   <img
                     src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/69929e33a9efde5eb39163e7.png"
                     alt="JooY Media Logo"
-                    className="h-8 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
+                    className="h-11 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
                   />
                 </div>
                 <div className="flex flex-col items-center gap-2">
