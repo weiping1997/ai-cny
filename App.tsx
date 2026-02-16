@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { UploadedFileState, GeneratedContent, GenerationStatus } from './types';
 import UploadZone from './components/UploadZone';
 import ResultDisplay from './components/ResultDisplay';
-import { Wand2, Video, Image as ImageIcon, Sparkles, Clock } from 'lucide-react';
+import { Wand2, Video, Image as ImageIcon, Sparkles, Clock, Facebook, Instagram, Linkedin, ExternalLink } from 'lucide-react';
 
 // Hardcoded prompts for the specific 2026 Horse Year theme
 const IMAGE_PROMPT = "把这张图片变成2026马年新春风格。保留人物主要特征，但让背景和服饰充满节日氛围。添加大红灯笼、金色骏马装饰元素、绚丽的烟花背景、红色剪纸。整体画面喜庆洋洋，色彩鲜艳（红色和金色为主），高质量，高细节，电影感光效，3D皮克斯风格或高保真摄影风格。";
@@ -406,9 +406,46 @@ function App() {
           </div>
 
           {/* Footer Note */}
-          <div className="mt-6 text-center text-red-200/60 text-xs">
-            <p>Powered by LEAD</p>
-            <p className="mt-1">Designed for Horseh 2026</p>
+          <div className="mt-8 pt-8 border-t border-red-500/20 text-center">
+            <h3 className="text-yellow-400 font-bold mb-6 flex items-center justify-center gap-2">
+              <span className="w-8 h-px bg-yellow-500/30"></span>
+              关注 AI (Follow Us)
+              <span className="w-8 h-px bg-yellow-500/30"></span>
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+              {/* LEAD Socials */}
+              <div className="space-y-3 bg-black/20 p-4 rounded-xl border border-red-500/10">
+                <p className="text-yellow-200/80 font-bold text-sm mb-2 border-b border-red-500/10 pb-2">LEAD</p>
+                <div className="flex flex-col gap-2">
+                  <a href="https://www.facebook.com/thelead.io" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Facebook size={14} /> Facebook
+                  </a>
+                  <a href="https://www.instagram.com/theleadio/" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Instagram size={14} /> Instagram
+                  </a>
+                  <a href="https://www.linkedin.com/school/thelead" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Linkedin size={14} /> Linkedin
+                  </a>
+                </div>
+              </div>
+
+              {/* JooY Media Socials */}
+              <div className="space-y-3 bg-black/20 p-4 rounded-xl border border-red-500/10">
+                <p className="text-yellow-200/80 font-bold text-sm mb-2 border-b border-red-500/10 pb-2">JooY Media</p>
+                <div className="flex flex-col gap-2">
+                  <a href="https://www.facebook.com/jooymedia/" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Facebook size={14} /> Facebook
+                  </a>
+                  <a href="https://www.instagram.com/jooy.media" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Instagram size={14} /> Instagram
+                  </a>
+                  <a href="https://www.linkedin.com/company/jooymedia" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
+                    <Linkedin size={14} /> Linkedin
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
