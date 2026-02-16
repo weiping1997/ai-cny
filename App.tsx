@@ -79,9 +79,9 @@ function App() {
 
     onProgress?.('正在上传照片...');
 
-    // Create an AbortController for timeout (3 minutes for long-running workflows)
+    // Create an AbortController for timeout (5 minutes for long-running workflows)
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 180000); // 180 seconds timeout
+    const timeoutId = setTimeout(() => controller.abort(), 300000); // 300 seconds timeout
 
     try {
       onProgress?.(mode === 'video' ? '正在生成视频，预计需要 60-90 秒...' : '正在生成图片，预计需要 30-60 秒...');
@@ -171,7 +171,7 @@ function App() {
     } catch (error: any) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
-        throw new Error('请求超时。生成时间超过 3 分钟，请稍后重试。');
+        throw new Error('请求超时。生成时间超过 5 分钟，请稍后重试。');
       }
       throw error;
     }
