@@ -418,7 +418,7 @@ function App() {
               <div className="space-y-3 bg-black/20 p-4 rounded-xl border border-red-500/10">
                 <div className="mb-2 border-b border-red-500/10 pb-2">
                   <img
-                    src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/69929e331d5e042cc93d6144.png"
+                    src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/6992a36b6bac2480b7b57be5.png"
                     alt="LEAD Logo"
                     className="h-8 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
                   />
