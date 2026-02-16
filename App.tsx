@@ -413,17 +413,17 @@ function App() {
               <span className="w-8 h-px bg-yellow-500/30"></span>
             </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
               {/* LEAD Socials */}
-              <div className="space-y-3 bg-black/20 p-4 rounded-xl border border-red-500/10">
-                <div className="mb-2 border-b border-red-500/10 pb-2">
+              <div className="space-y-3 bg-black/20 p-4 rounded-xl border border-red-500/10 flex flex-col items-center">
+                <div className="mb-2 border-b border-red-500/10 pb-2 w-full flex justify-center">
                   <img
                     src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/6992a36b6bac2480b7b57be5.png"
                     alt="LEAD Logo"
                     className="h-8 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
                   />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col items-center gap-2">
                   <a href="https://www.facebook.com/thelead.io" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
                     <Facebook size={14} /> Facebook
                   </a>
@@ -437,15 +437,15 @@ function App() {
               </div>
 
               {/* JooY Media Socials */}
-              <div className="space-y-3 bg-black/20 p-4 rounded-xl border border-red-500/10">
-                <div className="mb-2 border-b border-red-500/10 pb-2">
+              <div className="space-y-3 bg-black/20 p-4 rounded-xl border border-red-500/10 flex flex-col items-center">
+                <div className="mb-2 border-b border-red-500/10 pb-2 w-full flex justify-center">
                   <img
                     src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/69929e33a9efde5eb39163e7.png"
                     alt="JooY Media Logo"
                     className="h-8 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
                   />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col items-center gap-2">
                   <a href="https://www.facebook.com/jooymedia/" target="_blank" rel="noopener noreferrer" className="text-red-200/60 hover:text-yellow-400 text-xs flex items-center gap-2 transition-colors">
                     <Facebook size={14} /> Facebook
                   </a>
