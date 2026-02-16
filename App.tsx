@@ -418,7 +418,7 @@ function App() {
               <div className="space-y-3 bg-black/20 p-4 rounded-xl border border-red-500/10">
                 <div className="mb-2 border-b border-red-500/10 pb-2">
                   <img
-                    src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/6980f07818eccef1dd28667d.png"
+                    src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/69929e331d5e042cc93d6144.png"
                     alt="LEAD Logo"
                     className="h-8 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
                   />
@@ -440,7 +440,7 @@ function App() {
               <div className="space-y-3 bg-black/20 p-4 rounded-xl border border-red-500/10">
                 <div className="mb-2 border-b border-red-500/10 pb-2">
                   <img
-                    src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/697ed6ca1f68d1cbacace0d1.png"
+                    src="https://storage.googleapis.com/msgsndr/szVYTdKpbjBJvbLHEDmm/media/69929e33a9efde5eb39163e7.png"
                     alt="JooY Media Logo"
                     className="h-8 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
                   />
